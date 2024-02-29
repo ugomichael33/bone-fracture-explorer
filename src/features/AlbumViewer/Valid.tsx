@@ -1,4 +1,4 @@
-import React. { useState } from "react";
+import React, { useState } from "react";
 
 import PopupContainer from "@/components/PopupContainer";
 import ImagePaginator, { fetchPageData } from "@/components/ImagePaginator";
