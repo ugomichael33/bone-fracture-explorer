@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface ImagePaginatorProps {
   currentPage: number;
   totalPages: number;

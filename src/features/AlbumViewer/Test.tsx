@@ -52,7 +52,7 @@ export default function Test({ images }: { images: any[] }) {
       />
       {showImage && (
         <PopupContainer
-          containerWidth="md:w-[500px] sm:!mt-40"
+          containerWidth="md:w-[700px] sm:!mt-40"
           header={photoData.name}
           isVisible={showImage}
           content={

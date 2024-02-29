@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React. { useState } from "react";
 
 import PopupContainer from "@/components/PopupContainer";
 import ImagePaginator, { fetchPageData } from "@/components/ImagePaginator";
@@ -30,7 +30,7 @@ export default function Valid({ photos }: { photos: any[] }) {
 
   return (
     <div>
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 gap-y-2">
+      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-3 gap-y-2">
         {currentData?.map((photo: any, idx: number) => (
           <div key={idx} className="mb-1" onClick={() => handleShow(photo)}>
             <img
@@ -51,7 +51,7 @@ export default function Valid({ photos }: { photos: any[] }) {
       />
       {showImage && (
         <PopupContainer
-          containerWidth="md:w-[500px] sm:!mt-40"
+          containerWidth="md:w-[700px] sm:!mt-40"
           header={photoData.name}
           isVisible={showImage}
           content={

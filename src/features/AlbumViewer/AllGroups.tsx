@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import PopupContainer from "@/components/PopupContainer";
 import ImagePaginator, { fetchPageData } from "@/components/ImagePaginator";
@@ -50,7 +50,7 @@ export default function PhotoCollection({ images }: { images: any[] }) {
       />
       {isViewerOpen && (
         <PopupContainer
-          containerWidth={"md:w-[500px] sm:!mt-40"}
+          containerWidth={"md:w-[700px] sm:!mt-40"}
           header={selectedImage.name}
           isVisible={isViewerOpen}
           content={

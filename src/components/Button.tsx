@@ -14,7 +14,7 @@ function CustomButton({
   return (
     <button
       {...restOfProps}
-      className={`${buttonColor} border rounded-full h-[29px] px-2 font-bold custom-button-class`}
+      className={`${buttonColor} text-xs border rounded-full h-[29px] px-3 font-bold custom-button-class `}
     >
       <i className={`bi bi-record-fill  me-1`} />
       {children}

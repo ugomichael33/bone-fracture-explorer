@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import useSearchData, { areAllNone } from "@/utils/hooks/useFilterData";
@@ -25,11 +25,6 @@ export default function AlbumViewer() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [imagesPerPage, setImagesPerPage] = useState<number>(54);
 
-  useEffect(() => {
-    viewAlbum("bone-fracture-detection");
-    alert("I spent about 7 hrs on the assessment");
-  }, []);
-
   const viewAlbum = async (albumName: string) => {
     setIsLoading(true);
     try {
@@ -49,6 +44,10 @@ export default function AlbumViewer() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    viewAlbum("bone-fracture-detection");
+  }, []);
 
   const {
     handleSearchData: handleSearchDataAll,
@@ -296,14 +295,8 @@ export default function AlbumViewer() {
                 </Link>
               ))}
             </p>
-            <div className="mt-3 grid grid-cols-2 gap-1">
+            <div className="mt-3 flex-wrap gap-4 flex">
               {classFilterButtons.map((filteredButton, index: number) => (
-                <div
-                  key={index}
-                  className={`${
-                    index >= 4 ? "col-span-2" : "" // Items from the 5th onwards span 2 columns
-                  }`}
-                >
                   <CustomButton
                     key={index}
                     onClick={filteredButton.onclick}
@@ -317,7 +310,6 @@ export default function AlbumViewer() {
                   >
                     {filteredButton.label}
                   </CustomButton>
-                </div>
               ))}
             </div>
             <div>
@@ -365,9 +357,9 @@ export default function AlbumViewer() {
                   onClick={menu.handleOnclick}
                   className={`${
                     tab == menu.tab
-                      ? "font-semibold text-[#F2CC58] border-b-2 border-[#FFD75C] bg-[#FFD75C]"
-                      : "text-gray-700 hover:text-[#FFD75C] hover:border-b-2 hover:border-[#FFD75C]"
-                  } px-5 py-2 focus:outline-none`}
+                      ? "font-semibold text-[#FFD75C] border-b-2 border-[#FFD75C] bg-[#ffd75c42]"
+                      : "text-gray-700 text-[#041D32] hover:text-[#FFD75C] hover:border-b-2 hover:border-[#FFD75C]"
+                  } px-6 pt-2 focus:outline-none`}
                 >
                   {menu.label}
                 </button>
