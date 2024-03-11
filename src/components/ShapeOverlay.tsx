@@ -35,6 +35,8 @@ export default function ShapeOverlay({ image }: { image: any }) {
     fetchLabel();
   }, [image]);
 
+  const fillColor = classAttr[parseInt(classId, 10)]?.color || "none";
+
   return (
     <svg
       width="100%"
@@ -42,11 +44,7 @@ export default function ShapeOverlay({ image }: { image: any }) {
       viewBox={"0 0 1 1"}
       style={{ position: "absolute", top: 0, left: 0 }}
     >
-      <polygon
-        points={polygonCoords}
-        fill={classAttr[classId]?.color}
-        strokeOpacity={2}
-      />
+      <polygon points={polygonCoords} fill={fillColor} strokeOpacity={2} />
     </svg>
   );
 }

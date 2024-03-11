@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import useSearchData, { areAllNone } from "@/hooks/useFilterData";
-import { classes } from "@/utils/constants";
+import {
+  classFilterButtons,
+  classes,
+  menus,
+  selection,
+} from "@/utils/constants";
 import CustomButton from "@/components/ui/Button";
 import RangeSelector from "@/components/ui/RangeSelector";
 import ImageGridSkeleton from "@/components/ui/Skeleton";
 import PhotoGallery from "@/components/gallery/PhotoGallery";
+import Image from "next/image";
 
 export default function AlbumViewer() {
   const [photos, setPhotos] = useState<any>({
@@ -135,87 +141,6 @@ export default function AlbumViewer() {
     setCurrentPage(newPage);
   };
 
-  const selection = [
-    {
-      tab: 1,
-      label: "Select all",
-      handleOnSelect: () => handleSelected(1),
-    },
-    {
-      tab: 2,
-      label: "Deselect all",
-      handleOnSelect: () => handleSelected(2),
-    },
-  ];
-
-  const menus = [
-    {
-      tab: 1,
-      label: "All groups",
-      handleOnclick: () => handleOnTabClick(1),
-    },
-    {
-      tab: 2,
-      label: "Train",
-      handleOnclick: () => handleOnTabClick(2),
-    },
-    {
-      tab: 3,
-      label: "Valid",
-      handleOnclick: () => handleOnTabClick(3),
-    },
-    {
-      tab: 4,
-      label: "Test",
-      handleOnclick: () => handleOnTabClick(4),
-    },
-  ];
-
-  const classFilterButtons = [
-    {
-      label: "Elbow positive",
-      btnColor: "custom-button-class",
-      btnName: "elbow_positive",
-      onclick: () => handleSelectClassFilter("elbow_positive"),
-    },
-    {
-      label: "Fingers positive",
-      btnColor: "btn-success",
-      btnName: "fingers_positive",
-      onclick: () => handleSelectClassFilter("fingers_positive"),
-    },
-    {
-      label: "Humerus",
-      btnColor: "btn-secondary",
-      btnName: "humerus",
-      onclick: () => handleSelectClassFilter("humerus"),
-    },
-    {
-      label: "Forearm fracture",
-      btnColor: "btn-warning",
-      btnName: "forearm_fracture",
-      onclick: () => handleSelectClassFilter("forearm_fracture"),
-    },
-    {
-      label: "Humerus fracture",
-      btnColor: "btn-danger",
-      btnName: "humerus_fracture",
-      onclick: () => handleSelectClassFilter("humerus_fracture"),
-    },
-    {
-      label: "Shoulder fracture",
-      btnColor: "btn-warning2",
-      btnName: "shoulder_fracture",
-      onclick: () => handleSelectClassFilter("shoulder_fracture"),
-    },
-    {
-      label: "Wrist positive",
-      btnColor: "btn-secondary2",
-      btnName: "wrist_positive",
-      onclick: () => handleSelectClassFilter("wrist_positive"),
-    },
-  ];
-
   const handleSelectClassFilter = (btnName: string) => {
     if (selectedClassFilter.includes(btnName)) {
       let classArray = selectedClassFilter.filter((item) => item !== btnName);
@@ -279,12 +204,12 @@ export default function AlbumViewer() {
       <div className="flex flex-row gap-5">
         <div className="lg:w-[25%]">
           <div className="border-[#D1D1D6] border rounded-lg p-5 lg:h-screen xl:h-screen md:h-screen">
-            <img
+            <Image
               src="/assets/svgs/logo.svg"
-              width={200}
-              height={200}
               alt="Distal Humerus Fracture"
               className="w-[350px]"
+              width={200}
+              height={300}
             />
             <p className="mt-10 font-semibold text-[15px]">Classes filter</p>
             <p className="mt-10">
@@ -292,7 +217,7 @@ export default function AlbumViewer() {
                 <Link
                   key={index}
                   href={"#"}
-                  onClick={item.handleOnSelect}
+                  onClick={() => handleSelected(item.tab)}
                   className={`me-5 ${
                     item.tab === selected ? "text-[#2081D2]" : "text-gray-400"
                   }`}
@@ -305,7 +230,9 @@ export default function AlbumViewer() {
               {classFilterButtons.map((filteredButton, index: number) => (
                 <CustomButton
                   key={index}
-                  onClick={filteredButton.onclick}
+                  onClick={() =>
+                    handleSelectClassFilter(filteredButton.btnName)
+                  }
                   buttonColor={`${filteredButton.btnColor} 
                         ${
                           selectedClassFilter.includes(filteredButton.btnName)
@@ -359,7 +286,7 @@ export default function AlbumViewer() {
               {menus.map((menu, index: number) => (
                 <button
                   key={index}
-                  onClick={menu.handleOnclick}
+                  onClick={() => handleOnTabClick(menu.tab)}
                   className={`${
                     tab == menu.tab
                       ? "font-medium text-[#FFD75C] border-b-2 border-[#FFD75C] bg-[#ffd75c42]"
@@ -383,58 +310,3 @@ export default function AlbumViewer() {
     </div>
   );
 }
-
-// import React, { useState, useEffect } from "react";
-// import FilterSidebar from "./FilterSidebar"; // Adjust path as necessary
-// // import ImageDisplayArea from "./ImageDisplayArea"; // Adjust path as necessary
-// import { useAlbumData } from "../../hooks/useAlbumData";
-
-// const AlbumViewer = () => {
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-//   const [selectedRange, setSelectedRange] = useState<{ min: number; max: number }>({ min: 0, max: 100 }); // Example range
-
-//   const {
-//     photos,
-//     isLoading,
-//     error,
-//     fetchAlbumData,
-//   } = useAlbumData();
-
-//   useEffect(() => {
-//     fetchAlbumData("bone-fracture-detection");
-//   }, [fetchAlbumData]);
-
-//   const handleFilterChange = (filters: string[]) => {
-//     setSelectedFilters(filters);
-//     // Potentially refetch or filter data based on new filters
-//   };
-
-//   const handleRangeChange = (range: { min: number; max: number }) => {
-//     setSelectedRange(range);
-//     // Potentially refetch or filter data based on new range
-//   };
-
-//   if (error) {
-//     return <div>Failed to load data: {error.message}</div>;
-//   }
-
-//   return (
-//     <div className="flex flex-row">
-//       <FilterSidebar
-//         selectedFilters={selectedFilters}
-//         onFilterChange={handleFilterChange}
-//         selectedRange={selectedRange}
-//         onRangeChange={handleRangeChange}
-//       />
-//       {/* <ImageDisplayArea
-//         photos={photos} // Consider filtering photos based on selectedFilters and selectedRange
-//         isLoading={isLoading}
-//         currentPage={currentPage}
-//         onPageChange={setCurrentPage}
-//       /> */}
-//     </div>
-//   );
-// };
-
-// export default AlbumViewer;

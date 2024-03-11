@@ -108,7 +108,7 @@ async function generateRespObj(
   )}`;
   const labelContent = await getFileContent(label);
   const labelList = labelContent?.split(" ");
-  const classId = labelList?.[0];
+  const classId = labelList?.[0] ? parseInt(labelList[0], 10) : -1;
   const coordsList = labelList.slice(1);
   const coordinates = [];
 

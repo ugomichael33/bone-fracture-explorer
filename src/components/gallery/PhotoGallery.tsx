@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import PopupContainer from "@/components/ui/PopupContainer";
 import ShapeOverlay from "@/components/ShapeOverlay";
 import ImagePaginator, { fetchPageData } from "@/components/ui/ImagePaginator";
+import Image from "next/image";
 
 export default function PhotoGallery({
   images,
@@ -42,10 +43,12 @@ export default function PhotoGallery({
             onClick={() => showImageDetails(image)}
           >
             <div style={{ position: "relative", width: "100%" }}>
-              <img
+              <Image
                 className="w-full h-24 cursor-pointer"
                 src={image.thumbnail}
                 alt={image.name}
+                width={200}
+                height={300}
               />
               <ShapeOverlay image={image} />
             </div>
@@ -72,7 +75,7 @@ export default function PhotoGallery({
                 Detail Button
               </button>
               <div style={{ position: "relative", width: "100%" }}>
-                <img
+                <Image
                   className="w-full h-full rounded-lg bg-white shadow-inner object-cover cursor-pointer"
                   src={selectedImage.image}
                   alt={selectedImage.name}

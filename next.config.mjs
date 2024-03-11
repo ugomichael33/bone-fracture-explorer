@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['s3://dataspan.frontend-home-assignment/bone-fracture-detection/'],
+        domains: ['s3://dataspan.frontend-home-assignment/bone-fracture-detection/', "s3.eu-central-1.amazonaws.com"],
       },
     webpack: (config, { isServer }) => {
         if (!isServer) {
