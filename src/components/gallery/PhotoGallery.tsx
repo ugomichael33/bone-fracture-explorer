@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import PopupContainer from "@/components/PopupContainer";
+import PopupContainer from "@/components/ui/PopupContainer";
 import ShapeOverlay from "@/components/ShapeOverlay";
-import ImagePaginator, { fetchPageData } from "@/components/ImagePaginator";
+import ImagePaginator, { fetchPageData } from "@/components/ui/ImagePaginator";
 
 export default function PhotoGallery({
   images,
@@ -18,7 +18,9 @@ export default function PhotoGallery({
   const [isViewerOpen, setViewerOpen] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<any>({});
 
-  const limitedImages = images.slice(0, 200);
+  const totalImagesFetched = images.length;
+
+  const limitedImages = images.slice(0, totalImagesFetched);
 
   const totalImages = limitedImages.length;
   const totalPageCount = Math.ceil(totalImages / itemsPerPage);

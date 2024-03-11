@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
-import useSearchData, { areAllNone } from "@/utils/hooks/useFilterData";
+import useSearchData, { areAllNone } from "@/hooks/useFilterData";
 import { classes } from "@/utils/constants";
-import CustomButton from "@/components/Button";
-import RangeSelector from "@/components/RangeSelector";
-import ImageGridSkeleton from "@/components/Skeleton";
-import PhotoGallery from "@/components/PhotoGallery";
+import CustomButton from "@/components/ui/Button";
+import RangeSelector from "@/components/ui/RangeSelector";
+import ImageGridSkeleton from "@/components/ui/Skeleton";
+import PhotoGallery from "@/components/gallery/PhotoGallery";
 
 export default function AlbumViewer() {
   const [photos, setPhotos] = useState<any>({
@@ -86,7 +86,6 @@ export default function AlbumViewer() {
   };
 
   const handleRangeSelector = (searchRange: string[]) => {
-    console.log("searchRange-->", searchRange);
     handleSearchDataAll(photos?.allGroups, searchRange);
     handleSearchDataTrain(photos?.train, searchRange);
     handleSearchDataValid(photos?.valid, searchRange);
@@ -122,7 +121,14 @@ export default function AlbumViewer() {
   const displayImageRange = () => {
     const startIndex = (currentPage - 1) * imagesPerPage + 1;
     const endIndex = Math.min(startIndex + imagesPerPage - 1, activePhotoCount);
-    return `${endIndex} of ${activePhotoCount}`;
+    return [
+      <span key="endIndex">{endIndex}</span>,
+      <span key="of" className="font-[400]">
+        {" "}
+        of{" "}
+      </span>,
+      <span key="activePhotoCount">{activePhotoCount}</span>,
+    ];
   };
 
   const handlePageChange = (newPage: number) => {
@@ -280,7 +286,7 @@ export default function AlbumViewer() {
               alt="Distal Humerus Fracture"
               className="w-[350px]"
             />
-            <p className="mt-10 font-[600] text-[15px]">Classes filter</p>
+            <p className="mt-10 font-semibold text-[15px]">Classes filter</p>
             <p className="mt-10">
               {selection.map((item, index: number) => (
                 <Link
@@ -297,19 +303,19 @@ export default function AlbumViewer() {
             </p>
             <div className="mt-3 flex-wrap gap-4 flex">
               {classFilterButtons.map((filteredButton, index: number) => (
-                  <CustomButton
-                    key={index}
-                    onClick={filteredButton.onclick}
-                    buttonColor={`${filteredButton.btnColor} 
+                <CustomButton
+                  key={index}
+                  onClick={filteredButton.onclick}
+                  buttonColor={`${filteredButton.btnColor} 
                         ${
                           selectedClassFilter.includes(filteredButton.btnName)
                             ? "active"
                             : ""
                         }`}
-                    type="button"
-                  >
-                    {filteredButton.label}
-                  </CustomButton>
+                  type="button"
+                >
+                  {filteredButton.label}
+                </CustomButton>
               ))}
             </div>
             <div>
@@ -342,11 +348,10 @@ export default function AlbumViewer() {
                 Bone-fracture-detection{" "}
               </div>
               <div className="mt-3">
-                <span>
+                <span className="font-[700]">
                   {" "}
-                  <span className="font-[600]">
-                    {displayImageRange()} images
-                  </span>
+                  {displayImageRange()}
+                  <span className="font-[400]"> images</span>
                 </span>
               </div>
             </div>
@@ -357,9 +362,9 @@ export default function AlbumViewer() {
                   onClick={menu.handleOnclick}
                   className={`${
                     tab == menu.tab
-                      ? "font-semibold text-[#FFD75C] border-b-2 border-[#FFD75C] bg-[#ffd75c42]"
+                      ? "font-medium text-[#FFD75C] border-b-2 border-[#FFD75C] bg-[#ffd75c42]"
                       : "text-gray-700 text-[#041D32] hover:text-[#FFD75C] hover:border-b-2 hover:border-[#FFD75C]"
-                  } px-6 pt-2 focus:outline-none`}
+                  } px-6 pt-2 focus:outline-none text-sm`}
                 >
                   {menu.label}
                 </button>
@@ -378,3 +383,58 @@ export default function AlbumViewer() {
     </div>
   );
 }
+
+// import React, { useState, useEffect } from "react";
+// import FilterSidebar from "./FilterSidebar"; // Adjust path as necessary
+// // import ImageDisplayArea from "./ImageDisplayArea"; // Adjust path as necessary
+// import { useAlbumData } from "../../hooks/useAlbumData";
+
+// const AlbumViewer = () => {
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+//   const [selectedRange, setSelectedRange] = useState<{ min: number; max: number }>({ min: 0, max: 100 }); // Example range
+
+//   const {
+//     photos,
+//     isLoading,
+//     error,
+//     fetchAlbumData,
+//   } = useAlbumData();
+
+//   useEffect(() => {
+//     fetchAlbumData("bone-fracture-detection");
+//   }, [fetchAlbumData]);
+
+//   const handleFilterChange = (filters: string[]) => {
+//     setSelectedFilters(filters);
+//     // Potentially refetch or filter data based on new filters
+//   };
+
+//   const handleRangeChange = (range: { min: number; max: number }) => {
+//     setSelectedRange(range);
+//     // Potentially refetch or filter data based on new range
+//   };
+
+//   if (error) {
+//     return <div>Failed to load data: {error.message}</div>;
+//   }
+
+//   return (
+//     <div className="flex flex-row">
+//       <FilterSidebar
+//         selectedFilters={selectedFilters}
+//         onFilterChange={handleFilterChange}
+//         selectedRange={selectedRange}
+//         onRangeChange={handleRangeChange}
+//       />
+//       {/* <ImageDisplayArea
+//         photos={photos} // Consider filtering photos based on selectedFilters and selectedRange
+//         isLoading={isLoading}
+//         currentPage={currentPage}
+//         onPageChange={setCurrentPage}
+//       /> */}
+//     </div>
+//   );
+// };
+
+// export default AlbumViewer;
